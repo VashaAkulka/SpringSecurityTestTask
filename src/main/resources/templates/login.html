@@ -60,6 +60,19 @@
             font-size: 14px;
             text-align: center;
         }
+        a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -76,6 +89,7 @@
         </div>
         <button type="submit">Войти</button>
         <div class="error-message" th:if="${param.error}">Неправильное имя пользователя или пароль</div>
+        <a href="/">Назад</a>
     </form>
 </div>
 </body>

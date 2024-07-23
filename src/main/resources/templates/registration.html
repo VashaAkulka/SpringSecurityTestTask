@@ -74,6 +74,19 @@
             font-size: 14px;
             text-align: center;
         }
+        a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -105,6 +118,7 @@
         </div>
         <button type="submit">Зарегестрироваться</button>
         <div class="error-message" th:if="${error != null}" th:text="${error}">Ошибка</div>
+        <a href="/">Назад</a>
     </form>
 </div>
 </body>
