@@ -1,4 +1,4 @@
-package ru.sermyazhko.SpringSecurityTestTask.model;
+package ru.sermyazhko.SpringSecurityTestTask.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

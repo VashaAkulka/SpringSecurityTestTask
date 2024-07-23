@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+</head>
+<body>
+<h1>Register</h1>
+<form action="/registration" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required/>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required/>
+    </div>
+    <div>
+        <label>Role:</label>
+        <div>
+            <input type="radio" id="accountOwner" name="role" value="ACCOUNT_OWNER" required/>
+            <label for="accountOwner">Account Owner</label>
+        </div>
+        <div>
+            <input type="radio" id="admin" name="role" value="ADMIN" required/>
+            <label for="admin">Admin</label>
+        </div>
+    </div>
+    <div>
+        <button type="submit">Register</button>
+    </div>
+    <div>
+        <p th:if="${error != null}" th:text="${error}" style="color:red;">Ошибка</p>
+    </div>
+</form>
+</body>
+</html>

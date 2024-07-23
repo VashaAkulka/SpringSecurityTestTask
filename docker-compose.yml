@@ -17,3 +17,10 @@
         PGADMIN_DEFAULT_PASSWORD: root
       ports:
         - "5050:80"
+    spring_application:
+      container_name: spring_application
+      build: .
+      ports:
+        - "8080:8080"
+      depends_on:
+        - database

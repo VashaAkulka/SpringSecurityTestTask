@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Details</title>
+</head>
+<body>
+<a href="/logout">Выйти</a>
+<h1>Account Details</h1>
+
+<div>
+    <h2>Account Information</h2>
+    <p>Balance:</strong> <span th:text="${account.getBalance()}">Balance</span></p>
+    <p>Blocked:</strong> <span th:text="${account.getIsBlocked()} ? 'Yes' : 'No'">Blocked</span></p>
+    <p>Owner:</strong> <span th:text="${account.owner.getUsername()}">Owner Username</span></p>
+
+    <form th:action="@{/account/{id}/transaction(id=${account.getOwner().getId()})}" th:method="put">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount">
+        <button type="submit" name="type" value="DEPOSIT">DEPOSIT</button>
+        <button type="submit" name="type" value="WITHDRAWAL">WITHDRAWAL</button>
+    </form>
+    <div>
+        <p th:if="${error != null}" th:text="${error}" style="color:red;">Ошибка</p>
+    </div>
+</div>
+
+<div th:if="${#lists.size(account.transactions) > 0}">
+    <h2>Transactions</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${account.transactions}">
+            <td th:text="${transaction.id}">ID</td>
+            <td th:text="${transaction.amount}">Amount</td>
+            <td th:text="${transaction.getType().name()}">Type</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

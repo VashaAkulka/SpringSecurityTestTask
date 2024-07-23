@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<a href="/logout">Выйти</a>
+<h1>Dashboard</h1>
+
+<h2>Accounts</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Balance</th>
+        <th>Blocked</th>
+        <th>Owner</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.id}">ID</td>
+        <td th:text="${account.balance}">Balance</td>
+        <td th:text="${account.isBlocked} ? 'Yes' : 'No'">Blocked</td>
+        <td th:text="${account.owner.username}">Owner</td>
+        <td>
+            <form th:action="@{/admin/blockAccount/{id}(id=${account.getId()})}" th:method="put">
+                <button type="submit" th:text="${account.isBlocked ? 'Unblock' : 'Block'}"></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
