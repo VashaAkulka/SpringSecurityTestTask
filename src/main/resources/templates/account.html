@@ -2,46 +2,147 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Account Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .account-info {
+            margin-bottom: 20px;
+        }
+        .account-info p {
+            font-size: 16px;
+            color: #555;
+            margin: 10px 0;
+        }
+        .account-info span {
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <a href="/logout">Выйти</a>
-<h1>Account Details</h1>
 
-<div>
-    <h2>Account Information</h2>
-    <p>Balance:</strong> <span th:text="${account.getBalance()}">Balance</span></p>
-    <p>Blocked:</strong> <span th:text="${account.getIsBlocked()} ? 'Yes' : 'No'">Blocked</span></p>
-    <p>Owner:</strong> <span th:text="${account.owner.getUsername()}">Owner Username</span></p>
+<div class="container">
+    <h2>Информация о счете</h2>
+    <div class="account-info">
+        <p>Баланс: <span th:text="${account.getBalance()}">Balance</span></p>
+        <p>Блокировка: <span th:text="${account.getIsBlocked()} ? 'Yes' : 'No'">Blocked</span></p>
+        <p>Владелец: <span th:text="${account.owner.getUsername()}">Owner Username</span></p>
 
-    <form th:action="@{/account/{id}/transaction(id=${account.getOwner().getId()})}" th:method="put">
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount">
-        <button type="submit" name="type" value="DEPOSIT">DEPOSIT</button>
-        <button type="submit" name="type" value="WITHDRAWAL">WITHDRAWAL</button>
-    </form>
-    <div>
-        <p th:if="${error != null}" th:text="${error}" style="color:red;">Ошибка</p>
+        <form th:action="@{/account/{id}/transaction(id=${account.getOwner().getId()})}" th:method="put">
+            <div class="form-group">
+                <label for="amount">Объем:</label>
+                <input type="number" id="amount" name="amount" required>
+            </div>
+            <button type="submit" name="type" value="DEPOSIT">Пополнить</button>
+            <button type="submit" name="type" value="WITHDRAWAL">Снять</button>
+        </form>
+        <div class="error-message" th:if="${error != null}" th:text="${error}">Ошибка</div>
     </div>
-</div>
 
-<div th:if="${#lists.size(account.transactions) > 0}">
-    <h2>Transactions</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Amount</th>
-            <th>Type</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="transaction : ${account.transactions}">
-            <td th:text="${transaction.id}">ID</td>
-            <td th:text="${transaction.amount}">Amount</td>
-            <td th:text="${transaction.getType().name()}">Type</td>
-        </tr>
-        </tbody>
-    </table>
+    <div th:if="${#lists.size(account.transactions) > 0}" class="table-container">
+        <h2>Транзакции</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Объем</th>
+                <th>Тип транзакции</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${account.transactions}">
+                <td th:text="${transaction.id}">ID</td>
+                <td th:text="${transaction.amount}">Amount</td>
+                <td th:text="${transaction.getType().name()}">Type</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

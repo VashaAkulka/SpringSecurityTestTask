@@ -26,13 +26,13 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(
-                () -> new UsernameNotFoundException("not found user")
+                () -> new UsernameNotFoundException("Пользователь не найден")
         );
     }
 
     public void addUser(String username, String password, Role role) throws UserAlreadyExistsException {
         if (userRepository.findByUsername(username).isPresent()) {
-            throw new UserAlreadyExistsException("Пользователь с таким ником уже есть");
+            throw new UserAlreadyExistsException("Пользователь с таким логином уже есть");
         }
 
         if (role == Role.ACCOUNT_OWNER) {

@@ -2,39 +2,110 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 350px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .radio-group {
+            margin-bottom: 15px;
+        }
+        .radio-group label {
+            margin-left: 5px;
+        }
+        .radio-group div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<h1>Register</h1>
-<form action="/registration" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required/>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required/>
-    </div>
-    <div>
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required/>
-    </div>
-    <div>
-        <label>Role:</label>
-        <div>
-            <input type="radio" id="accountOwner" name="role" value="ACCOUNT_OWNER" required/>
-            <label for="accountOwner">Account Owner</label>
+<div class="container">
+    <h1>Registration</h1>
+    <form action="/registration" method="post">
+        <div class="form-group">
+            <label for="username">Логин:</label>
+            <input type="text" id="username" name="username" required>
         </div>
-        <div>
-            <input type="radio" id="admin" name="role" value="ADMIN" required/>
-            <label for="admin">Admin</label>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
         </div>
-    </div>
-    <div>
-        <button type="submit">Register</button>
-    </div>
-    <div>
-        <p th:if="${error != null}" th:text="${error}" style="color:red;">Ошибка</p>
-    </div>
-</form>
+        <div class="form-group">
+            <label for="confirmPassword">Подтвердить пароль:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+        <div class="form-group radio-group">
+            <label>Роль:</label>
+            <div>
+                <input type="radio" id="accountOwner" name="role" value="ACCOUNT_OWNER" required>
+                <label for="accountOwner">Владелец счета</label>
+            </div>
+            <div>
+                <input type="radio" id="admin" name="role" value="ADMIN" required>
+                <label for="admin">Администратор</label>
+            </div>
+        </div>
+        <button type="submit">Зарегестрироваться</button>
+        <div class="error-message" th:if="${error != null}" th:text="${error}">Ошибка</div>
+    </form>
+</div>
 </body>
 </html>
